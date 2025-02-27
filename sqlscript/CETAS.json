@@ -1,0 +1,17 @@
+{
+	"name": "CETAS",
+	"properties": {
+		"content": {
+			"query": "\nCREATE EXTERNAL TABLE cetas_revenue\nWITH\n(\n    LOCATION = 'cetas_revenue',\n    DATA_SOURCE = ext_ds,\n    FILE_FORMAT = parquet_file\n)\nAS\n    SELECT \n    *\nFROM \n    OPENROWSET(\n        BULK 'revenue',\n        DATA_SOURCE = 'ext_ds',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0',\n        HEADER_ROW = TRUE\n    ) as revenue_table\n\n\nCREATE VIEW revenue_view\nAS\nSELECT \n    *\nFROM \n    OPENROWSET(\n        BULK 'revenue',\n        DATA_SOURCE = 'ext_ds',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0',\n        HEADER_ROW = TRUE\n    ) as revenue_table\n\n\n    SELECT * FROM revenue_view\n\n    SELECT * FROM cetas_revenue\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "princeserverless",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

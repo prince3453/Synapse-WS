@@ -1,0 +1,17 @@
+{
+	"name": "DataScope",
+	"properties": {
+		"content": {
+			"query": "--------------------\n-- CREATE CREDINTIAL\n--------------------\n\nCREATE DATABASE SCOPED CREDENTIAL princecred\nWITH\n    IDENTITY = 'Managed Identity'\n\n\n--------------------------\n-- CREATE EXT DATASOURCE\n--------------------------\n\nCREATE EXTERNAL DATA SOURCE ext_ds\nWITH\n(\n    LOCATION = 'https://synapsedatalakeprince.dfs.core.windows.net/raw',\n    CREDENTIAL = princecred\n)\n\n--------------------------\n-- CREATE EXT FILE FORMATE\n--------------------------\n\nCREATE EXTERNAL FILE FORMAT csv_file\nWITH\n(\n    FORMAT_TYPE = DELIMITEDTEXT,\n    FORMAT_OPTIONS (\n        FIELD_TERMINATOR = ','\n    )\n)\n\nCREATE EXTERNAL FILE FORMAT parquet_file\nWITH\n(\n    FORMAT_TYPE = PARQUET,\n     DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n)\n-- DROP EXTERNAL FILE FORMAT parquet_file;\n\n\n--------------------------\n-- OPENROWSET FUNCTION\n--------------------------\n\nSELECT \n    *\nFROM \n    OPENROWSET(\n        BULK 'revenue',\n        DATA_SOURCE = 'ext_ds',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0',\n        HEADER_ROW = TRUE\n    ) as revenue_table",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "princeserverless",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

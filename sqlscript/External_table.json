@@ -1,0 +1,17 @@
+{
+	"name": "External_table",
+	"properties": {
+		"content": {
+			"query": "CREATE EXTERNAL TABLE external_revenue\n(\n\t Dealer_ID VARCHAR(400), \n\t Model_ID VARCHAR(400),\n\t Branch_ID VARCHAR(400),\n\t Date_ID VARCHAR(400),\n\t Units_Sold VARCHAR(400),\n\t Revenue VARCHAR(400)\n)\nWITH\n(\n\tLOCATION = 'revenue',\n\tDATA_SOURCE = ext_ds,\n\tFILE_FORMAT = csv_file\n)\n\nSELECT * FROM external_revenue;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "princeserverless",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
